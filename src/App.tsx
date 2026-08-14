@@ -2,6 +2,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { AuthProvider } from './hooks/useAuth'
+import { isSupabaseConfigured } from './lib/supabase'
+import { MissingConfig } from './components/MissingConfig'
 import { useSeed } from './hooks/useSeed'
 import { RequireAuth } from './components/RequireAuth'
 import Login from './pages/Login'
@@ -40,6 +42,9 @@ function Seeded({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  // Senza chiavi Supabase ogni query fallirebbe: meglio dirlo esplicitamente
+  if (!isSupabaseConfigured) return <MissingConfig />
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
