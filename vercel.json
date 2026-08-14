@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "comment": "App a pagina singola: le rotte lato client vanno servite da index.html, altrimenti un refresh su /calendario o /abbonamento/:id restituisce 404. I file statici hanno la precedenza, quindi /assets/* non passa di qui.",
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
