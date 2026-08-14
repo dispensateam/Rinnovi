@@ -31,3 +31,4 @@ dist-ssr
 # Ambiente locale — mai committare
 .env.local
 .env*.local
+dist
