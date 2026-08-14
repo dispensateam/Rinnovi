@@ -37,35 +37,40 @@ export const BILLING_CYCLE_LABELS: Record<BillingCycle, string> = {
   custom: 'Personalizzato',
 }
 
-/** Colonne comuni a tutte le tabelle. */
-interface BaseRow {
+/**
+ * Colonne comuni a tutte le tabelle.
+ * Sono `type` e non `interface` di proposito: il client Supabase vincola le
+ * righe a `Record<string, unknown>` e solo gli alias di tipo ottengono la
+ * index signature implicita che serve a soddisfarlo.
+ */
+type BaseRow = {
   id: string
   user_id: string
   created_at: string
   updated_at: string
 }
 
-export interface ListRow extends BaseRow {
+export type ListRow = BaseRow & {
   name: string
   icon: string
   sort_order: number
 }
 
-export interface CategoryRow extends BaseRow {
+export type CategoryRow = BaseRow & {
   name: string
   color: string
   icon: string
   sort_order: number
 }
 
-export interface PaymentMethodRow extends BaseRow {
+export type PaymentMethodRow = BaseRow & {
   name: string
   icon: string
   color: string
   last_four: string
 }
 
-export interface SubscriptionRow extends BaseRow {
+export type SubscriptionRow = BaseRow & {
   name: string
   notes: string
   amount: number
@@ -87,7 +92,7 @@ export interface SubscriptionRow extends BaseRow {
   payment_method_id: string | null
 }
 
-export interface PriceChangeRow extends BaseRow {
+export type PriceChangeRow = BaseRow & {
   subscription_id: string
   /** Formato ISO `yyyy-MM-dd`. */
   changed_at: string
@@ -113,31 +118,39 @@ export type SubscriptionUpdate = Partial<Omit<SubscriptionRow, Generated>>
 export type PriceChangeInsert = Omit<PriceChangeRow, Generated> & { user_id: string }
 export type PriceChangeUpdate = Partial<Omit<PriceChangeRow, Generated>>
 
-/** Forma attesa dal client Supabase generico. */
-export interface Database {
+/** Forma attesa dal client Supabase generico (`Relationships` incluso). */
+export type Database = {
   public: {
     Tables: {
-      lists: { Row: ListRow; Insert: ListInsert; Update: ListUpdate }
-      categories: { Row: CategoryRow; Insert: CategoryInsert; Update: CategoryUpdate }
+      lists: { Row: ListRow; Insert: ListInsert; Update: ListUpdate; Relationships: [] }
+      categories: {
+        Row: CategoryRow
+        Insert: CategoryInsert
+        Update: CategoryUpdate
+        Relationships: []
+      }
       payment_methods: {
         Row: PaymentMethodRow
         Insert: PaymentMethodInsert
         Update: PaymentMethodUpdate
+        Relationships: []
       }
       subscriptions: {
         Row: SubscriptionRow
         Insert: SubscriptionInsert
         Update: SubscriptionUpdate
+        Relationships: []
       }
       price_changes: {
         Row: PriceChangeRow
         Insert: PriceChangeInsert
         Update: PriceChangeUpdate
+        Relationships: []
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
-    CompositeTypes: Record<string, never>
+    Views: { [_ in never]: never }
+    Functions: { [_ in never]: never }
+    Enums: { [_ in never]: never }
+    CompositeTypes: { [_ in never]: never }
   }
 }
