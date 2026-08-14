@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import type { ReactNode } from 'react'
@@ -10,11 +11,15 @@ import Login from './pages/Login'
 import Subscriptions from './pages/Subscriptions'
 import Calendar from './pages/Calendar'
 import Settings from './pages/Settings'
-import Statistics from './pages/Statistics'
 import SubscriptionDetail from './pages/SubscriptionDetail'
+
 import ListsSettings from './pages/settings/ListsSettings'
 import CategoriesSettings from './pages/settings/CategoriesSettings'
 import PaymentMethodsSettings from './pages/settings/PaymentMethodsSettings'
+
+// Recharts pesa quanto tutto il resto dell'app: si carica solo all'apertura
+// delle statistiche, non all'avvio.
+const Statistics = lazy(() => import('./pages/Statistics'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +58,16 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Protected><Subscriptions /></Protected>} />
             <Route path="/calendario" element={<Protected><Calendar /></Protected>} />
-            <Route path="/statistiche" element={<Protected><Statistics /></Protected>} />
+            <Route
+              path="/statistiche"
+              element={
+                <Protected>
+                  <Suspense fallback={<div className="min-h-screen bg-bg" />}>
+                    <Statistics />
+                  </Suspense>
+                </Protected>
+              }
+            />
             <Route path="/abbonamento/:id" element={<Protected><SubscriptionDetail /></Protected>} />
             <Route path="/impostazioni" element={<Protected><Settings /></Protected>} />
             <Route path="/impostazioni/liste" element={<Protected><ListsSettings /></Protected>} />

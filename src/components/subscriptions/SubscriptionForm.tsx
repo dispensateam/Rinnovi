@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import type { BillingCycle, SubscriptionRow } from '../../types/database'
 import { BILLING_CYCLES, BILLING_CYCLE_LABELS } from '../../types/database'
@@ -113,7 +112,6 @@ export function SubscriptionForm({
   const createList = useCreateList()
   const createCategory = useCreateCategory()
   const createPaymentMethod = useCreatePaymentMethod()
-  const [error, setError] = useState('')
 
   function set<K extends keyof SubscriptionFormValues>(key: K, value: SubscriptionFormValues[K]) {
     onChange({ ...values, [key]: value })
@@ -127,7 +125,6 @@ export function SubscriptionForm({
       onSubmit={(e) => {
         e.preventDefault()
         if (!valid || saving) return
-        setError('')
         onSubmit()
       }}
     >
@@ -289,12 +286,6 @@ export function SubscriptionForm({
           placeholder="Piano famiglia condiviso"
         />
       </FieldGroup>
-
-      {error && (
-        <p role="alert" className="mt-4 text-sm text-danger">
-          {error}
-        </p>
-      )}
 
       <button
         type="submit"
