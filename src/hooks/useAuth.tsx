@@ -8,7 +8,10 @@ interface AuthContextValue {
   user: User | null
   /** true finché Supabase non ha risolto la sessione salvata in localStorage. */
   loading: boolean
-  signIn: (email: string) => Promise<void>
+  signIn: (email: string, password: string) => Promise<void>
+  signUp: (email: string, password: string) => Promise<{ needsConfirmation: boolean }>
+  sendPasswordReset: (email: string) => Promise<void>
+  updatePassword: (password: string) => Promise<void>
   signOut: () => Promise<void>
 }
 
@@ -44,12 +47,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session,
       user: session?.user ?? null,
       loading,
-      /** Magic link: nessuna password, nessuna registrazione (§3). */
-      async signIn(email: string) {
-        const { error } = await supabase.auth.signInWithOtp({
+      async signIn(email: string, password: string) {
+        const { error } = await supabase.auth.signInWithPassword({
           email,
+          password,
+        })
+        if (error) throw error
+      },
+      async signUp(email: string, password: string) {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
           options: { emailRedirectTo: window.location.origin },
         })
+        if (error) throw error
+        return { needsConfirmation: !data.session }
+      },
+      async sendPasswordReset(email: string) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/login?reset=1`,
+        })
+        if (error) throw error
+      },
+      async updatePassword(password: string) {
+        const { error } = await supabase.auth.updateUser({ password })
         if (error) throw error
       },
       async signOut() {
