@@ -62,7 +62,7 @@ export default function Settings() {
 
   return (
     <PageShell>
-      <div className="px-5 pt-6">
+      <div className="px-5 pt-safe-page">
         <h1 className="hero-number text-[48px] leading-none">Impostazioni</h1>
 
         <section className="mt-8">

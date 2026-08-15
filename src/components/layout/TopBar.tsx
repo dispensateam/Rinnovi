@@ -7,7 +7,13 @@ export function TopBar({ onAdd }: { onAdd: () => void }) {
   const navigate = useNavigate()
 
   return (
-    <div className="sticky top-0 z-30 bg-gradient-to-b from-bg via-bg/95 to-transparent px-6 pb-4 pt-4">
+    // La sfumatura parte da sotto la status bar: il padding superiore include
+    // la safe area, così dietro alla Dynamic Island c'è sfondo pieno e non un
+    // bordo netto a metà.
+    <div
+      className="sticky top-0 z-30 bg-gradient-to-b from-bg via-bg/95 to-transparent px-6 pb-4"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 16px)' }}
+    >
       <div className="flex items-center justify-between">
         <Pill
           variant="accent"

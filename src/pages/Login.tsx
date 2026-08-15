@@ -91,7 +91,7 @@ export default function Login() {
         aria-hidden
       />
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-app flex-col justify-center px-6">
+      <main className="relative mx-auto flex min-h-viewport w-full max-w-app flex-col justify-center px-6">
         <h1 className="hero-number text-5xl">Rinnovi</h1>
         <p className="mt-3 text-lg text-text-muted">
           I tuoi abbonamenti, e quanto ti costano davvero in un anno.

@@ -58,7 +58,7 @@ export default function SubscriptionDetail() {
   if (subscriptions.isLoading) {
     return (
       <PageShell hideTabBar>
-        <div className="px-6 pt-16">
+        <div className="px-6 pt-safe-page">
           <Skeleton className="h-20 w-20 rounded-2xl" />
           <Skeleton className="mt-4 h-8 w-48" />
           <Skeleton className="mt-6 h-28 w-full" />
@@ -70,7 +70,7 @@ export default function SubscriptionDetail() {
   if (!sub) {
     return (
       <PageShell hideTabBar>
-        <div className="px-6 pt-16">
+        <div className="px-6 pt-safe-page">
           <p className="text-text-muted">Abbonamento non trovato.</p>
           <Pill variant="muted" className="mt-4 h-11" onClick={() => navigate('/')}>
             Torna agli abbonamenti
@@ -93,13 +93,13 @@ export default function SubscriptionDetail() {
 
   return (
     <PageShell hideTabBar>
-      <div className="relative min-h-screen">
+      <div className="relative min-h-viewport">
         {/* Sfondo stellato attenuato (§7.3) */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[380px] opacity-50">
           <Starfield count={90} seed={99} />
         </div>
 
-        <div className="relative px-6 pb-16 pt-4">
+        <div className="relative px-6 pb-16 pt-safe-tight">
           <div className="flex items-center justify-between">
             <IconButton label="Indietro" size={44} onClick={() => navigate(-1)}>
               <ArrowLeft className="h-5 w-5" aria-hidden />

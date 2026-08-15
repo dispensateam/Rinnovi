@@ -13,12 +13,27 @@
   body,
   #root {
     height: 100%;
+    /* Dietro alla status bar traslucida e all'home indicator si vede questo,
+       non il bianco di default del browser. */
+    background-color: #0a0810;
   }
 
   body {
     @apply bg-bg text-text-primary font-sans antialiased;
-    /* Evita il rimbalzo orizzontale sulla colonna da 440px */
-    overflow-x: hidden;
+    /* Niente rimbalzo elastico oltre i bordi: in standalone sembra un bug. */
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /*
+   * Il contenimento orizzontale sta qui e usa `clip`, non `hidden`, e non sta
+   * su <body>: `overflow-x: hidden` su body propaga al viewport e su iOS sposta
+   * lo scroll sul body, sganciando i `position: fixed` dal viewport — era la
+   * causa della tab bar che scrollava col contenuto. `clip` non crea un
+   * contenitore di scroll, quindi il problema non si ripresenta.
+   */
+  #root {
+    overflow-x: clip;
   }
 
   /* Focus sempre visibile: requisito di accessibilità (§9 rifinitura) */
@@ -44,6 +59,30 @@
 
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /*
+   * Altezza piena del viewport. `dvh` segue la barra degli indirizzi di Safari
+   * che si ritrae durante lo scroll; `vh` resta come fallback sulla riga prima.
+   */
+  .min-h-viewport {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Spazio in fondo alle pagine con tab bar: capsula + safe area + respiro. */
+  .pb-tabbar {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom) + 24px);
+  }
+
+  /* Inizio pagina per le schermate senza TopBar: sotto la Dynamic Island. */
+  .pt-safe-page {
+    padding-top: calc(env(safe-area-inset-top) + 24px);
+  }
+
+  /* Variante per i pannelli che iniziano con una riga di icone. */
+  .pt-safe-tight {
+    padding-top: calc(env(safe-area-inset-top) + 16px);
   }
 
   .no-scrollbar::-webkit-scrollbar {

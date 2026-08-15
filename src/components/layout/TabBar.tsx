@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, Circle, Settings } from 'lucide-react'
@@ -18,14 +19,23 @@ const TABS: Tab[] = [
 /**
  * Tab bar flottante (§9.5): capsula centrata, non ancorata ai bordi,
  * 16px sopra la safe area dell'iPhone.
+ *
+ * Montata in portale su <body>: così nessun contenitore intermedio può
+ * diventarne il containing block (basta un `transform` o un `filter` su un
+ * antenato per sganciare un `position: fixed` dal viewport) e la barra resta
+ * incollata al fondo dello schermo qualunque cosa faccia la pagina.
  */
 export function TabBar() {
-  return (
+  const bar = (
     <nav
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-40 safe-bottom"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-40"
       aria-label="Navigazione principale"
     >
-      <div className="mx-auto w-full max-w-app px-4 pb-4">
+      {/* I 16px voluti sopra il bordo, più l'home indicator dove esiste. */}
+      <div
+        className="mx-auto w-full max-w-app px-4"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}
+      >
         <div className="pointer-events-auto mx-auto flex w-[78%] items-center justify-between rounded-full border border-hairline bg-[rgba(20,17,25,.85)] px-2 py-2 backdrop-blur-xl">
           {TABS.map(({ to, label, Icon }) => (
             <NavLink
@@ -62,4 +72,6 @@ export function TabBar() {
       </div>
     </nav>
   )
+
+  return createPortal(bar, document.body)
 }

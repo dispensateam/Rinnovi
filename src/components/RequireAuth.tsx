@@ -13,7 +13,7 @@ export function RequireAuth({ children }: { children: ReactNode }) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-bg">
+      <div className="flex min-h-viewport items-center justify-center bg-bg">
         <Loader2 className="h-6 w-6 animate-spin text-accent-glow" aria-label="Caricamento" />
       </div>
     )

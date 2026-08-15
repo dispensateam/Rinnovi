@@ -62,7 +62,7 @@ export default function Statistics() {
 
   return (
     <PageShell hideTabBar>
-      <div className="px-5 pb-16 pt-4">
+      <div className="px-5 pb-16 pt-safe-tight">
         <div className="flex items-center justify-between">
           <h1 className="hero-number text-[34px]">Statistiche</h1>
           <IconButton label="Chiudi" size={44} onClick={() => navigate(-1)}>
