@@ -31,11 +31,14 @@ export function TabBar() {
       className="pointer-events-none fixed inset-x-0 bottom-0 z-40"
       aria-label="Navigazione principale"
     >
-      {/* I 16px voluti sopra il bordo, più l'home indicator dove esiste. */}
-      <div
-        className="mx-auto w-full max-w-app px-4"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}
-      >
+      {/*
+       * La capsula sta *dentro* la safe area inferiore, non sopra: sommare
+       * env(safe-area-inset-bottom) ai 16px la staccava di ~50px dal bordo e
+       * la faceva sembrare sospesa a metà. L'home indicator scorre sopra la
+       * parte bassa della capsula senza coprire le etichette, che è come si
+       * comportano le tab bar native di iOS.
+       */}
+      <div className="mx-auto w-full max-w-app px-4 pb-3">
         <div className="pointer-events-auto mx-auto flex w-[78%] items-center justify-between rounded-full border border-hairline bg-[rgba(20,17,25,.85)] px-2 py-2 backdrop-blur-xl">
           {TABS.map(({ to, label, Icon }) => (
             <NavLink

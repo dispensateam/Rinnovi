@@ -70,9 +70,14 @@
     min-height: 100dvh;
   }
 
-  /* Spazio in fondo alle pagine con tab bar: capsula + safe area + respiro. */
+  /*
+   * Spazio in fondo alle pagine con tab bar, così l'ultima riga non resta
+   * nascosta: altezza della capsula (~76px) + i 12px che la staccano dal
+   * bordo + respiro. La safe area non entra nel conto perché la capsula ci
+   * sta dentro invece che sopra.
+   */
   .pb-tabbar {
-    padding-bottom: calc(88px + env(safe-area-inset-bottom) + 24px);
+    padding-bottom: 124px;
   }
 
   /* Inizio pagina per le schermate senza TopBar: sotto la Dynamic Island. */
