@@ -57,10 +57,6 @@
     letter-spacing: -0.02em;
   }
 
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
   /*
    * Altezza piena del viewport. `dvh` segue la barra degli indirizzi di Safari
    * che si ritrae durante lo scroll; `vh` resta come fallback sulla riga prima.

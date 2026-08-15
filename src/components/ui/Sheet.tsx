@@ -51,6 +51,14 @@ export function Sheet({ open, onClose, children, label }: SheetProps) {
             aria-modal="true"
             aria-label={label}
             className="absolute inset-x-0 bottom-0 top-0 mx-auto flex w-full max-w-app flex-col overflow-hidden bg-bg"
+            // Il pannello copre tutto lo schermo, bordi fisici inclusi: senza
+            // questo l'header (e quindi il tasto Chiudi) finisce sotto la
+            // status bar e la Dynamic Island, e il fondo sotto l'home
+            // indicator. Vale per tutti i pannelli, non solo per uno.
+            style={{
+              paddingTop: 'env(safe-area-inset-top)',
+              paddingBottom: 'env(safe-area-inset-bottom)',
+            }}
             initial={reduced ? { opacity: 0 } : { y: '100%' }}
             animate={reduced ? { opacity: 1 } : { y: 0 }}
             exit={reduced ? { opacity: 0 } : { y: '100%' }}
