@@ -12,7 +12,7 @@ export function TopBar({ onAdd }: { onAdd: () => void }) {
     // bordo netto a metà.
     <div
       className="sticky top-0 z-30 bg-gradient-to-b from-bg via-bg/95 to-transparent px-6 pb-4"
-      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 16px)' }}
+      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 4px)' }}
     >
       <div className="flex items-center justify-between">
         <Pill

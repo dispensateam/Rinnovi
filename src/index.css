@@ -80,14 +80,19 @@
     padding-bottom: 124px;
   }
 
-  /* Inizio pagina per le schermate senza TopBar: sotto la Dynamic Island. */
+  /*
+   * Inizio pagina per le schermate senza TopBar. I margini sommati all'inset
+   * sono dimezzati rispetto a quelli originali: env(safe-area-inset-top) vale
+   * già ~59px e copre da solo status bar e Dynamic Island, quindi aggiungerci
+   * il margine pieno pensato per il browser abbassava troppo il contenuto.
+   */
   .pt-safe-page {
-    padding-top: calc(env(safe-area-inset-top) + 24px);
+    padding-top: calc(env(safe-area-inset-top) + 12px);
   }
 
   /* Variante per i pannelli che iniziano con una riga di icone. */
   .pt-safe-tight {
-    padding-top: calc(env(safe-area-inset-top) + 16px);
+    padding-top: calc(env(safe-area-inset-top) + 8px);
   }
 
   .no-scrollbar::-webkit-scrollbar {
