@@ -13,10 +13,10 @@ interface PageShellProps {
  */
 export function PageShell({ children, hideTabBar = false }: PageShellProps) {
   return (
-    <div className="relative min-h-screen bg-bg">
+    <div className="relative min-h-viewport bg-bg">
       <div className="relative mx-auto w-full max-w-app">
         {/* Spazio in fondo per non finire sotto la tab bar flottante */}
-        <div className={hideTabBar ? '' : 'pb-32'}>{children}</div>
+        <div className={hideTabBar ? 'pb-safe-b' : 'pb-tabbar'}>{children}</div>
       </div>
       {!hideTabBar && <TabBar />}
     </div>

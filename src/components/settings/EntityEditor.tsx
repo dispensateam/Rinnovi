@@ -55,7 +55,7 @@ export function EntityEditor({
 
   return (
     <PageShell>
-      <div className="px-5 pt-4">
+      <div className="px-5 pt-safe-tight">
         <IconButton label="Indietro" size={44} onClick={() => navigate('/impostazioni')}>
           <ArrowLeft className="h-5 w-5" aria-hidden />
         </IconButton>

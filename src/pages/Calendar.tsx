@@ -68,7 +68,7 @@ export default function Calendar() {
   return (
     <PageShell>
       <div
-        className="px-5 pt-6"
+        className="px-5 pt-safe-page"
         onTouchStart={(e) => {
           touchStartX.current = e.touches[0]?.clientX ?? null
         }}

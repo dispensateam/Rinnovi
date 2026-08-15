@@ -62,7 +62,7 @@ export default function App() {
               path="/statistiche"
               element={
                 <Protected>
-                  <Suspense fallback={<div className="min-h-screen bg-bg" />}>
+                  <Suspense fallback={<div className="min-h-viewport bg-bg" />}>
                     <Statistics />
                   </Suspense>
                 </Protected>

@@ -42,6 +42,12 @@ export default {
       fontFamily: {
         sans: ['"Inter Variable"', 'Inter', 'system-ui', 'sans-serif'],
       },
+      spacing: {
+        // Safe area di iOS: valgono 0 ovunque non ci sia un notch/home indicator,
+        // quindi si possono usare senza condizionali.
+        'safe-t': 'env(safe-area-inset-top)',
+        'safe-b': 'env(safe-area-inset-bottom)',
+      },
       maxWidth: {
         // Colonna mobile: su desktop l'app resta larga 440px, centrata (§7)
         app: '440px',
